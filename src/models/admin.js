@@ -9,4 +9,4 @@ const adminSchema = new mongoose.Schema({
   numberPhone: String, 
   roles: number
 })
-module.exports = mongoose.model('Admin', admin);
+module.exports = mongoose.model('Admin', adminSchema);

@@ -1,0 +1,36 @@
+{
+  "CreateUserManagerContent":{
+    "type": 1,
+    "user": {
+        "name":"carlos fuentes",
+        "userName": "CARLOSFUE2",
+        "email":"admin@admin.com",
+        "password":"admin",
+        "birthDate": "09/04/1994",
+        "numberPhone": "04244433022",
+        "assistantId": null
+    }
+  },
+  "CreateUserClient":{
+    "type": 2,
+    "user": {
+        "name":"carlos fuentes",
+        "userName": "CARLOSFUE2",
+        "email":"admin@admin.com",
+        "password":"admin",
+        "birthDate": "09/04/1994",
+        "numberPhone": "04244433022"
+    }
+  },
+  "CreateUserAssistance":{
+    "type": 3,
+    "user": {
+        "name":"carlos fuentes",
+        "userName": "CARLOSFUE2",
+        "email":"admin@admin.com",
+        "password":"admin",
+        "birthDate": "09/04/1994",
+        "numberPhone": "04244433022"
+    }
+  }
+}

@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 
-const assistantSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
 	name: String,
   userName: String,
   email: String,
   password: String,
   birthDate: Date,
   numberPhone: String, 
+  assistantId: String,
+  type: Object
 })
-module.exports = mongoose.model('Assistant', assistant);
+module.exports = mongoose.model('User', userSchema);
