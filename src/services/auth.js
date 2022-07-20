@@ -1,36 +1,15 @@
 import User from '../models/user'
+import resetPassSchema from '../models/resetPass'
 
 import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
 import { getUserForEmail } from './users'
 
-const SECRET = 'webxy';
-const secret = process.env.TOKEN_KEY || SECRET;
-
-const getType = (type) => {
-  let typeReturn = {
-    type,
-    name : ''
-  }
-  switch (type) {
-    case 1:
-      typeReturn.name = 'content manager'
-      break;
-    case 2:
-      typeReturn.name = 'client'
-      break;
-    case 3:
-      typeReturn.name = 'assistant'
-      break;
-    default:
-      typeReturn.name = 'content manager'
-      break;
-  }
-  return typeReturn;
-}
+import { sendEmail } from './email'
+import {generateToken} from './tokens'
 
 const register = async (user, type) => {
   user.type = getType(type);
+  let error = null;
   const userInDataBase = await getUserForEmail(user.email);
   if (userInDataBase) {
     return  error = {
@@ -42,11 +21,6 @@ const register = async (user, type) => {
   }
 }
 
-const generateJWT = (user) => {
-  return jwt.sign({ id: user._id }, secret, {
-    expiresIn: 86400
-  })  
-}
 
 const login = async (user) => {
   const { email, password } = user;
@@ -70,6 +44,20 @@ const login = async (user) => {
   }
 }
 
+const resetPassForEmail = async (email) => {
+  let error = null;
+  let code = null;
+  const userInDataBase = await getUserForEmail(email);
+  if (!userInDataBase) {
+    return  error = {
+      error: '401',
+      message: 'este usuario no esta registrado'
+    }
+  } else {
+   code = generateCodeResetPass(userInDataBase.email)
+  } 
+  return error ? error : code;
+}
 
 
 const encryptPass = async (user) => {
@@ -83,6 +71,84 @@ const compareEncryptPassword = (userPass, encryptPass) => {
   return bcrypt.compareSync(userPass, encryptPass);
 }
 
+const validateToken = async (email, token) =>{
+  let error = null;
+const isResetExist = await resetPassSchema.findOne({email});
+if(!isResetExist){
+  return error = {
+      error: '401',
+      message: 'no existe un user asociado'
+    }
+}else{
+  if(isResetExist.token !== token){
+    return error = {
+      error: '401',
+      message: 'este token no es correcto'
+    }
+  }else{
+    return true;
+  }
+}
+}
+
+const updatePassword  = async (token, password) =>{
+  let error = null;
+  const isResetExist = await resetPassSchema.findOne({token});
+  if(!isResetExist){
+        return error = {
+        error: '401',
+        message: 'este token no es correcto'
+      }
+  }else{
+    const newPassword = await encryptPass({password})
+    const update = await User.findOneAndUpdate({email:isResetExist.email}, {password: newPassword.password }) 
+    await resetPassSchema.findByIdAndRemove(isResetExist._id)
+    return update;
+  }
+}
+
+const generateCodeResetPass = async (email) => {
+  let token = null;
+  const isResetExist = await resetPassSchema.findOne({email});
+  if(isResetExist){
+    token = isResetExist.token;
+  }else{
+    token = generateToken(6);
+    const tokenForChangePass = {
+      email,
+      token
+    }
+    await resetPassSchema.create(tokenForChangePass);
+  }
+  const from= 'noreply@eroomsuite.com'; 
+  const to = email; 
+  const subject= "Cambio de clave";
+  const html = "<b>Este es tu codigo unico para cambiar tu contraseña --> "+ token +"</b>";
+  await sendEmail(from, to, subject, html);
+  return true;
+}
+
+const getType = (type) => {
+  let typeReturn = {
+    type,
+    name : ''
+  }
+  switch (type) {
+    case 1:
+      typeReturn.name = 'content manager'
+      break;
+    case 2:
+      typeReturn.name = 'client'
+      break;
+    case 3:
+      typeReturn.name = 'assistant'
+      break;
+    default:
+      typeReturn.name = 'content manager'
+      break;
+  }
+  return typeReturn;
+}
 
 
-module.exports = {register, login, generateJWT}
+module.exports = {register, login, resetPassForEmail, validateToken, updatePassword}
