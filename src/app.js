@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.set('port',process.env.PORT|| 3000)
+app.set('port',process.env.PORT|| 3001)
 
 app.use(express.json());
 app.use(cors());
