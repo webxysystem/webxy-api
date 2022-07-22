@@ -149,11 +149,10 @@ const generateCodeResetPass = async email => {
     await _resetPass.default.create(tokenForChangePass);
   }
 
-  const from = 'noreply@eroomsuite.com';
   const to = email;
   const subject = "Cambio de clave";
   const html = "<b>Este es tu codigo unico para cambiar tu contraseña --> " + token + "</b>";
-  await (0, _email.sendEmail)(from, to, subject, html);
+  await (0, _email.sendEmail)(to, subject, html);
   return true;
 };
 

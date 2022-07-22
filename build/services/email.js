@@ -2,27 +2,20 @@
 
 var _nodemailer = _interopRequireDefault(require("nodemailer"));
 
+var _nodemailerSendgrid = _interopRequireDefault(require("nodemailer-sendgrid"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const EMAIL_HOST = 'smtp.dreamhost.com';
-const EMAIL_PORT = 587;
-const EMAIL_USER = 'noreply@eroomsuite.com';
-const EMAIL_PASS = 'Enviocorreo!Jacidi20';
+const EMAIL_USER = 'webxy@lust-list.com';
+const API_KEY = "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";
 
-// Create reusable transporter object using SMTP transport.
-const transporter = _nodemailer.default.createTransport({
-  host: process.env.EMAIL_HOST || EMAIL_HOST,
-  port: process.env.EMAIL_PORT || EMAIL_PORT,
-  secure: process.env.SMTP_SECURE || false,
-  auth: {
-    user: process.env.EMAIL_USER || EMAIL_USER,
-    pass: process.env.EMAIL_PASS || EMAIL_PASS
-  }
-});
+const transporter = _nodemailer.default.createTransport((0, _nodemailerSendgrid.default)({
+  apiKey: API_KEY
+}));
 
-const sendEmail = async (from, to, subject, html) => {
+const sendEmail = async (to, subject, html) => {
   const options = {
-    from,
+    from: EMAIL_USER,
     to,
     subject,
     html
@@ -30,8 +23,6 @@ const sendEmail = async (from, to, subject, html) => {
   return await transporter.sendMail(options, function (error, info) {
     if (error) {
       console.log('hubo un error', error);
-    } else {
-      console.log('funciono', info);
     }
   });
 };

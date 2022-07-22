@@ -16,6 +16,8 @@ var _cors = _interopRequireDefault(require("./configurations/cors"));
 
 var _index = _interopRequireDefault(require("./controllers/index"));
 
+var _multer = _interopRequireDefault(require("./configurations/multer"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = (0, _express.default)(); // view engine setup and send static files
@@ -29,12 +31,13 @@ app.use(_express.default.urlencoded({
   extended: false
 }));
 app.use((0, _cookieParser.default)());
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 app.use(_express.default.json());
 app.use((0, _cors.default)());
 app.get('/', (req, res) => {
   res.send('Hola el path correcto es /api/v1');
-}); //create router
+});
+app.use(_multer.default); //create router
 
 (0, _index.default)(app);
 app.use(_error.logErrors);

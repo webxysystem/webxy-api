@@ -7,6 +7,7 @@ import logger from 'morgan';
 import mongoose from './configurations/database';
 import cors from './configurations/cors'
 import createRouter from "./controllers/index"
+import multer from "./configurations/multer"
 
 const app = express();
 
@@ -29,9 +30,12 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.send('Hola el path correcto es /api/v1');
 });
+app.use(multer);
+
 
 //create router
 createRouter(app);
+
 
 app.use(logErrors);
 app.use(boomErrorHandler);

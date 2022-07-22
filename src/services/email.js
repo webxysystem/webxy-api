@@ -1,35 +1,27 @@
-const EMAIL_HOST = 'smtp.dreamhost.com'
-const EMAIL_PORT = 587
-const EMAIL_USER = 'noreply@eroomsuite.com'
-const EMAIL_PASS = 'Enviocorreo!Jacidi20'
-
 import  nodemailer from "nodemailer";
+import nodemailerSendgrid from "nodemailer-sendgrid"
 
-// Create reusable transporter object using SMTP transport.
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || EMAIL_HOST,
-  port: process.env.EMAIL_PORT || EMAIL_PORT,
-  secure: process.env.SMTP_SECURE || false,
-  auth: {
-    user: process.env.EMAIL_USER || EMAIL_USER,
-    pass: process.env.EMAIL_PASS || EMAIL_PASS,
-  }
-});
+const EMAIL_USER = 'webxy@lust-list.com'
+const API_KEY = "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"
 
-const sendEmail = async (from, to, subject, html) => {
-      const options = {
-      from,
-      to,
-      subject,
-      html,
-    };
-    return await transporter.sendMail(options, function (error, info) {
-      if (error) {
-        console.log('hubo un error',error);
-      } else {
-        console.log('funciono', info);
-      }
-    });
+const transporter = nodemailer.createTransport(
+    nodemailerSendgrid({
+        apiKey: API_KEY
+    })
+);
+
+const sendEmail = async (to, subject, html) => {
+  const options = {
+    from:EMAIL_USER,
+    to,
+    subject,
+    html,
+  };
+  return await transporter.sendMail(options, function (error, info) {
+    if (error) {
+      console.log('hubo un error',error);
+    }
+  });
 } 
 
 module.exports = {sendEmail};

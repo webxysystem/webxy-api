@@ -120,11 +120,10 @@ const generateCodeResetPass = async (email) => {
     }
     await resetPassSchema.create(tokenForChangePass);
   }
-  const from= 'noreply@eroomsuite.com'; 
   const to = email; 
   const subject= "Cambio de clave";
-  const html = "<b>Este es tu codigo unico para cambiar tu contraseña --> "+ token +"</b>";
-  await sendEmail(from, to, subject, html);
+  const html = "<b>Este es tu codigo unico para cambiar tu contraseña --> " + token + "</b>";
+  await sendEmail(to, subject, html);
   return true;
 }
 
