@@ -2,6 +2,7 @@ import  express  from "express";
 import generalRouter from "./general"
 import usersRouter from "./users"
 import auhtRouter from "./auht"
+import publicationRouter from "./publication"
 
 
 function createRouter (app) {
@@ -10,6 +11,7 @@ function createRouter (app) {
   router.use('/', generalRouter);
   router.use('/users', usersRouter);
   router.use('/auht', auhtRouter);
+  router.use('/publications', publicationRouter);
 }
 
 

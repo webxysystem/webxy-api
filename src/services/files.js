@@ -21,7 +21,8 @@ const saveImage = async (image) => {
   const imageCloud = {
     title: image.filename,
     imageUrl: upload.secure_url,
-    public_id: upload.public_id
+    public_id: upload.public_id,
+    exclusiveContent:false
   }
   await removeFile(image.path);
   return await Image.create(imageCloud);
