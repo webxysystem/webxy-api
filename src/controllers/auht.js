@@ -8,7 +8,7 @@ let router = express.Router();
 
 router.post('/login', async (req, res, next) => {
   const credentials = req.body;
-  validateSchema(credentials, userLoginSchema, res, next);
+  //validateSchema(credentials, userLoginSchema, res, next);
   const userValidate = await login(credentials);
   let error = null
   let response = null;
@@ -27,7 +27,7 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/register', async (req, res, next) => {
   const request = req.body;
-  validateSchema(request, userRegisterSchema, res, next);
+  //validateSchema(request, userRegisterSchema, res, next);
   const type = request.type;
   let userCreated = await register(request.user, type)
   const token = generateJWT(userCreated);

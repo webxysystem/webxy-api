@@ -34,7 +34,7 @@ router.get('/my-gallery', auth, async (req, res) => {
 
 router.post('/add', auth, async (req, res, next) => {
   const publication = req.body;
-  validateSchema(publication, publicationAddSchema, res, next);
+  //validateSchema(publication, publicationAddSchema, res, next);
   publication.userAuhthorId = req.userId;
   publication.userOwnerId = req.userId;
   const savePublication = await createPublication(publication);
@@ -57,7 +57,7 @@ router.put('dislike/:id', auth, async (req, res) => {
 router.put('/edit/:id', auth, async (req, res, next) => {
   const idPublication = req.params.id;
   const payload = req.body;
-  validateSchema(payload, publicationEditSchema, res, next);
+  //validateSchema(payload, publicationEditSchema, res, next);
   const updatePublication = await modifyPublication(idPublication, payload);
   res.send(updatePublication);
 })
@@ -65,7 +65,7 @@ router.put('/edit/:id', auth, async (req, res, next) => {
 router.put('/transfer/:id', auth, async (req, res, next) => {
   const idPublication = req.params.id;
   const payload = req.body;
-  validateSchema(payload, publicationTransferSchema, res, next);
+  //validateSchema(payload, publicationTransferSchema, res, next);
   const { idOldOwner, idNewOwner } = payload
   const update = await transferPublication( idPublication, idOldOwner, idNewOwner);
   res.send(update)
