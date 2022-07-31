@@ -3,13 +3,16 @@ import { logErrors, errorHandler, boomErrorHandler } from './middlewares/error.h
 import  path  from "path";
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors'
+
 
 import mongoose from './configurations/database';
-import cors from './configurations/cors'
+//import cors from './configurations/cors'
 import createRouter from "./controllers/index"
 import multer from "./configurations/multer"
 
 const app = express();
+app.use(cors());
 
 // view engine setup and send static files
 app.set('views', path.join(__dirname, 'views'));
@@ -25,14 +28,6 @@ app.use(cookieParser());
 app.set('port',process.env.PORT|| 3001)
 
 app.use(express.json());
-app.use(cors());
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 app.get('/', (req, res) => {
   res.send('Hola el path correcto es /api/v1');
 });
