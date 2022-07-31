@@ -13,8 +13,8 @@ let router = _express.default.Router();
 router.get('/', (req, res, next) => {
   res.send('respond with a resource');
 });
-router.get('/managerContent', async (req, res) => {
-  const users = await getUsers();
+router.get('/users', async (req, res) => {
+  const users = await (0, _users.getUsers)();
   res.send(users);
 });
 module.exports = router;

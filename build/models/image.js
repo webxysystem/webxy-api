@@ -7,6 +7,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const imageSchema = new _mongoose.default.Schema({
   title: String,
   imageUrl: String,
-  public_id: String
+  public_id: String,
+  exclusiveContent: Boolean
 });
 module.exports = _mongoose.default.model('Image', imageSchema);

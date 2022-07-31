@@ -4,7 +4,7 @@ var _cors = _interopRequireDefault(require("cors"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const whitelist = ['http://localhost:8100', 'https://myapp.co'];
+const whitelist = ['*'];
 const options = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {

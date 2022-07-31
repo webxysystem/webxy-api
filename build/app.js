@@ -20,7 +20,9 @@ var _multer = _interopRequireDefault(require("./configurations/multer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const app = (0, _express.default)(); // view engine setup and send static files
+//import cors from 'cors'
+const app = (0, _express.default)();
+app.use((0, _cors.default)()); // view engine setup and send static files
 
 app.set('views', _path.default.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,7 +35,6 @@ app.use(_express.default.urlencoded({
 app.use((0, _cookieParser.default)());
 app.set('port', process.env.PORT || 3001);
 app.use(_express.default.json());
-app.use((0, _cors.default)());
 app.get('/', (req, res) => {
   res.send('Hola el path correcto es /api/v1');
 });
