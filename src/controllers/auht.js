@@ -1,14 +1,13 @@
 import  express  from "express";
 import { register, login, resetPassForEmail, validateToken, updatePassword } from "../services/auth"
 import { generateJWT } from '../services/tokens';
-import { userRegisterSchema, userLoginSchema } from '../schemas/auth';
-import validateSchema from '../middlewares/validatorSchema'
+
+import {validateLogin, validateRegister} from '../middlewares/authValidate'
 
 let router = express.Router();
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', validateLogin, async (req, res) => {
   const credentials = req.body;
-  //validateSchema(credentials, userLoginSchema, res, next);
   const userValidate = await login(credentials);
   let error = null
   let response = null;
@@ -25,9 +24,8 @@ router.post('/login', async (req, res, next) => {
   res.send(error ? error : response);
 })
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', validateRegister, async (req, res, next) => {
   const request = req.body;
-  //validateSchema(request, userRegisterSchema, res, next);
   const type = request.type;
   let userCreated = await register(request.user, type)
   const token = generateJWT(userCreated);

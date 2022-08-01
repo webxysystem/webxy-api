@@ -5,13 +5,22 @@ const userRegisterSchema = {
     userName: { type: "string" },
     email: { type: "string" },
     password: { type: "string" },
-    birthDate: { type: "date" },
+    birthDate: { type: "string" },
     numberPhone: { type: "string" },
-    type: { type: "number"}
   },
-  required: ["name", "email", "password", "birthDate", "type"],
-  additionalProperties: true
+  required: ["name", "userName", "email", "password", "birthDate", "numberPhone"],
+  additionalProperties: false
 };
+
+const bodyRegisterSchema = {
+  type: "object",
+  properties: {
+    type: { type: "number" },
+    user: { type: "object" },
+  },
+  required: [ "type", "user"],
+  additionalProperties: false
+}
 
 const userLoginSchema = {
   type: "object",
@@ -24,4 +33,4 @@ const userLoginSchema = {
 }
 
 
-module.exports = {userRegisterSchema, userLoginSchema}
+module.exports = {userRegisterSchema, bodyRegisterSchema, userLoginSchema}
