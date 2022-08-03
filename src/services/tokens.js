@@ -1,9 +1,7 @@
 import randtoken from 'rand-token';
 import jwt from "jsonwebtoken"
 
-
-const SECRET = 'webxy';
-const secret = process.env.TOKEN_KEY || SECRET;
+const secret = process.env.TOKEN_KEY;
 
 const generateToken = (numberOfCharacters) => {
   return randtoken.generate(numberOfCharacters)

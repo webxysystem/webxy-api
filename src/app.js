@@ -3,6 +3,7 @@ import { logErrors, errorHandler, boomErrorHandler } from './middlewares/error.h
 import  path  from "path";
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import 'dotenv/config' 
 
 import mongoose from './configurations/database';
 import cors from './configurations/cors'

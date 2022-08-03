@@ -3,9 +3,15 @@ const userRegisterSchema = {
   properties: {
     name: { type: "string" },
     userName: { type: "string" },
-    email: { type: "string" },
+    email: {
+      type: "string",
+      format: "email"
+    },
     password: { type: "string" },
-    birthDate: { type: "string" },
+    birthDate: {
+      type: "string",
+      format: "date"
+    },
     numberPhone: { type: "string" },
   },
   required: ["name", "userName", "email", "password", "birthDate", "numberPhone"],
@@ -25,7 +31,10 @@ const bodyRegisterSchema = {
 const userLoginSchema = {
   type: "object",
   properties: {
-    email: { type: "string" },
+    email: {
+      type: "string",
+      format: "email"
+    },
     password: { type: "string" },
   },
   required: [ "email", "password"],

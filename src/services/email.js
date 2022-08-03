@@ -1,8 +1,8 @@
 import  nodemailer from "nodemailer";
 import nodemailerSendgrid from "nodemailer-sendgrid"
 
-const EMAIL_USER = 'webxy@lust-list.com'
-const API_KEY = "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"
+const EMAIL_USER = process.env.EMAIL_USER
+const API_KEY = process.env.API_KEY
 
 const transporter = nodemailer.createTransport(
     nodemailerSendgrid({
